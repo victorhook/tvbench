@@ -1,12 +1,16 @@
+/* https://coolors.co/palettes/trending */
+
 body {
-    background-color: blue;
+    background-color: #1D3557;
     margin: 3em;
     font-size: 2em;
-    color: white;
+    color: #F1FAEE;
+    position: relative;
 }
 
 a {
     text-decoration: none;
+    color: #F1FAEE;
 }
 
 .visible {
@@ -21,7 +25,7 @@ a {
 .nav-logo {
     width: 128px;
     height: 128px;
-    color: white;
+    color: #F1FAEE;
     padding: .3em;
     border-radius: 15%;
     transition: 0.4s background-color;
@@ -31,3 +35,95 @@ a {
     background-color: rgb(135, 135, 228);
     transition: 0.4s background-color;
 }
+
+.content {
+    position: relative;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.button {
+    font-size: 1.5em;
+    border-radius: 5px;
+    padding: .3em .6em;
+    background-color: #A8DADC;
+    border: none;
+    color: #F1FAEE;
+    transition: 0.3s ease-in-out color, background-color;
+}
+
+.button:hover {
+    background-color: #c1d9da;
+    color: rgb(29, 29, 29);
+}
+
+
+/* Settings */
+#wifi-form {
+    position:absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1em;
+    background-color: #314e75;
+}
+
+#wifi-form {
+    position:absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+}
+
+
+#wifi-form .form-item {
+    display: flex;
+    margin: 1em;
+}
+
+#wifi-form .form-logo {
+    width: 64px;
+    height: 64px;
+}
+
+#wifi-form .form-item input {
+    font-size: 1.5em;
+    margin: 0 .4em;
+}
+
+#wifi-form .button-container {
+    margin-top: 2em;
+}
+
+#wifi-form .eye {
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+#wifi-form #eye-container {
+    display: grid;
+    position: relative;
+    cursor: pointer;
+}
+
+#wifi-form #wifi-close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+
+}
+
+#wifi-form svg {
+    width: 32px;
+    height: 32px;
+}
+
