@@ -1,0 +1,33 @@
+body {
+    background-color: blue;
+    margin: 3em;
+    font-size: 2em;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+/* Nav */
+.nav-logo {
+    width: 128px;
+    height: 128px;
+    color: white;
+    padding: .3em;
+    border-radius: 15%;
+    transition: 0.4s background-color;
+}
+
+.nav-active {
+    background-color: rgb(135, 135, 228);
+    transition: 0.4s background-color;
+}
