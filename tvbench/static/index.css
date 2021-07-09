@@ -58,6 +58,11 @@ a {
     border: none;
     color: #F1FAEE;
     transition: 0.3s ease-in-out color, background-color;
+    margin: 0 .3em;
+}
+
+.button-secondary {
+    background-color: #3a5988;
 }
 
 .button:hover {
@@ -91,9 +96,9 @@ a {
     height: 64px;
 }
 
-#wifi-form {
+.popup {
     margin-top: 3em;
-    position:absolute;
+    position: absolute;
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -101,16 +106,7 @@ a {
     background-color: #2a466e;
 }
 
-#wifi-form {
-    position:absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 2em;
-}
-
-
-#wifi-form .form-item {
+.popup-close {
     display: flex;
     margin: 1em;
 }
@@ -146,7 +142,7 @@ a {
     cursor: pointer;
 }
 
-#wifi-form #wifi-close {
+#wifi-close, #reboot-close {
     position: absolute;
     top: 1em;
     right: 1em;
@@ -190,4 +186,22 @@ a {
 #colorpicker {
     width: 300px;
     height: 50px;
+}
+
+/* Loading */
+#loading {
+    padding: 1em 4em;
+}
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
 }

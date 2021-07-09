@@ -46,8 +46,8 @@
         {% endfor %}
     </ul>
 
-    <form id="wifi-form" class="hidden">
-        <a id="wifi-close" href="#">
+    <form id="wifi-form" class="popup hidden">
+        <a id="wifi-close" href="#" class="popup-close">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                 <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
             </svg>
@@ -101,36 +101,26 @@
             eyeIsOpen = !eyeIsOpen;
 
             if (eyeIsOpen) {
-                eyeOpen.classList.add('visible');
-                eyeClose.classList.remove('visible');
-                eyeOpen.classList.remove('hidden');
-                eyeClose.classList.add('hidden');
+                show(eyeOpen);
+                hide(eyeClose);
                 wifiPassword.type = 'password';
             } else {
-                eyeClose.classList.add('visible');
-                eyeOpen.classList.remove('visible');
-                eyeOpen.classList.add('hidden');
-                eyeClose.classList.remove('hidden');
+                show(eyeClose);
+                hide(eyeOpen);
                 wifiPassword.type = 'text';
             }
         }
 
         function activateForm(wifi) {
             visible = true;
-            wifiForm.classList.remove('hidden');
-            wifiForm.classList.add('visible');
+            show(wifiForm);
             wifiName.value = wifi.innerHTML;
             toggleEye();
         }
 
         function deactivateForm(wifi) {
             visible = false;
-            wifiForm.classList.remove('visible');
-            eyeOpen.classList.remove('visible');
-            eyeClose.classList.remove('visible');
-            wifiForm.classList.add('hidden');
-            eyeOpen.classList.add('hidden');
-            eyeClose.classList.add('hidden');
+            hide(wifiForm);
         }
 
 
