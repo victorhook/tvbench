@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 import subprocess
 from typing import List
 import pickle
@@ -16,6 +16,11 @@ class Network:
     rate: str
     signal: int
     active: bool
+
+    def asdict(self):
+        data = asdict(self)
+        data.pop('active')
+        return data
 
 
 def sh(*args):
@@ -113,6 +118,12 @@ class Wifi:
     def disconnect(cls) -> bool:
         res = sh('nmcli', 'device', 'disconnect', cls._get_nic())
         return 'successfully disconnected' in res
+
+    @classmethod
+    def get_connected_network(cls, networks: List[Network]) -> Network:
+        for network in networks:
+            if network.active:
+                return network
 
 
 if __name__ == '__main__':

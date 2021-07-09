@@ -18,10 +18,15 @@ a {
 }
 
 .hidden {
-    visibility: hidden;
+    display: none;
 }
 
 /* Nav */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
 .nav-logo {
     width: 128px;
     height: 128px;
@@ -29,10 +34,11 @@ a {
     padding: .3em;
     border-radius: 15%;
     transition: 0.4s background-color;
+    margin: 0 .5em;
 }
 
 .nav-active {
-    background-color: rgb(135, 135, 228);
+    background-color: #385986;
     transition: 0.4s background-color;
 }
 
@@ -61,13 +67,38 @@ a {
 
 
 /* Settings */
+.network-container {
+    text-align: center;
+    width: 70%;
+    display: block;
+    margin: auto;
+    list-style: none;
+}
+
+.network {
+    text-align: left;
+    font-size: 1.5em;
+    display: flex;
+}
+
+.network a {
+    margin-left: 1em;
+}
+
+
+.wifi-logo {
+    width: 64px;
+    height: 64px;
+}
+
 #wifi-form {
+    margin-top: 3em;
     position:absolute;
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 1em;
-    background-color: #314e75;
+    background-color: #2a466e;
 }
 
 #wifi-form {
@@ -127,3 +158,36 @@ a {
     height: 32px;
 }
 
+
+/* Home */
+#home-content {
+    text-align: center;
+    width: 60%;
+    margin: auto;
+}
+
+.home-item {
+    text-align: left;
+    margin: 1em;
+    font-size: 1.5em;
+}
+
+.home-item label {
+    margin: .8em;
+}
+
+#bulb-container {
+    cursor: pointer;
+    position: relative;
+}
+
+.bulb {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+}
+
+#colorpicker {
+    width: 300px;
+    height: 50px;
+}

@@ -1,12 +1,62 @@
-<div>
-    <label>Stuff:</label>
-    <input type="text">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-    </svg>
-</div>
+<form>
+    <div class="home-item">
+        <label>Belysning: </label>
 
+        <span id="bulb-container">
+            <svg class="bulb" id="bulb-on" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+            <svg class="bulb" id="bulb-off" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-off-fill" viewBox="0 0 16 16">
+                <path d="M2 6c0-.572.08-1.125.23-1.65l8.558 8.559A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm10.303 4.181L3.818 1.697a6 6 0 0 1 8.484 8.484zM5 14.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5zM2.354 1.646a.5.5 0 1 0-.708.708l12 12a.5.5 0 0 0 .708-.708l-12-12z"/>
+            </svg>
+        </span>
+
+    </div>
+
+    <div class="home-item">
+        <label>Välj färg:</label>
+        <input type="color" id="colorpicker"/>
+    </div>
+
+    <input type="submit" class="button" value="Använd">
+
+</form>
 
 <script>
-    
+    const homeContent = document.getElementById('home-content');
+    const bulbContainer = document.getElementById('bulb-container');
+    const bulbOn = document.getElementById('bulb-on');
+    const bulbOff = document.getElementById('bulb-off');
+    let lightIsOn = false;
+
+    bulbContainer.addEventListener('click', () => toggleLight());
+    updateLight();
+
+    function toggleLight() {
+        lightIsOn = !lightIsOn;
+        console.log(lightIsOn);
+        updateLight();
+    }
+
+    function show(obj) {
+        obj.classList.remove('hidden');
+        obj.classList.add('visible');
+    }
+
+    function hide(obj) {
+        obj.classList.remove('visible');
+        obj.classList.add('hidden');
+    }
+
+    function updateLight() {
+
+        if (lightIsOn) {
+            hide(bulbOff);
+            show(bulbOn);
+        } else {
+            hide(bulbOn);
+            show(bulbOff);
+        }
+    }
+
 </script>
