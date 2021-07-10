@@ -1,4 +1,4 @@
-<form>
+<div>
     <div class="home-item">
         <label>Belysning: </label>
 
@@ -18,16 +18,19 @@
         <input type="color" id="colorpicker"/>
     </div>
 
-    <input type="submit" class="button" value="Använd">
+    <button class="button" id="color-button">Använd</button>
 
-</form>
+</div>
 
 <script>
     const homeContent = document.getElementById('home-content');
     const bulbContainer = document.getElementById('bulb-container');
     const bulbOn = document.getElementById('bulb-on');
     const bulbOff = document.getElementById('bulb-off');
+    const colorWheel = document.getElementById('colorpicker');
     let lightIsOn = false;
+
+    document.getElementById('color-button').addEventListener('click', () => setColor());
 
     bulbContainer.addEventListener('click', () => toggleLight());
     updateLight();
@@ -43,10 +46,28 @@
         if (lightIsOn) {
             hide(bulbOff);
             show(bulbOn);
+            on();
         } else {
             hide(bulbOn);
             show(bulbOff);
+            off();
         }
     }
+
+    function on() {
+        fetch(window.location.href + 'on/').then(res => console.log(res))
+    }
+
+    function off() {
+        fetch(window.location.href + 'off/').then(res => console.log(res))
+    }
+
+    function setColor() {
+        let url = window.location.href + 'color/';
+        url += String(colorWheel.value).substr(1, colorWheel.value.length) + '/';
+        fetch(url).then(res => console.log(res))
+    }
+
+    setColor();
 
 </script>
