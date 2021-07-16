@@ -15,12 +15,13 @@
 
     <div class="home-item">
         <label>Välj färg:</label>
-        <input type="color" id="colorpicker"/>
+        <input type="color" id="colorpicker" value="{{ color }}"/>
     </div>
 
     <button class="button" id="color-button">Använd</button>
 
 </div>
+
 
 <script>
     const homeContent = document.getElementById('home-content');
@@ -67,7 +68,5 @@
         url += String(colorWheel.value).substr(1, colorWheel.value.length) + '/';
         fetch(url).then(res => console.log(res))
     }
-
-    setColor();
 
 </script>

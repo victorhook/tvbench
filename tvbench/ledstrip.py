@@ -1,3 +1,5 @@
+from settings import Settings
+
 try:
     from rpi_ws281x import *
 except ImportError as e:
@@ -36,8 +38,7 @@ class Ledstrip:
         self.LED_INVERT = False
         self.LED_CHANNEL = 0
 
-        self.color = Color(255, 0, 0)
-        self.brightness = 255
+        self.brightness = Settings.get('brightness')
 
         self.strip = Adafruit_NeoPixel(
             self.LED_COUNT,
@@ -50,22 +51,32 @@ class Ledstrip:
         )
         self.strip.begin()
 
-    def set_color(self, color):
-        self.color = color
+    def save_color(self, raw_color: str):
+        Settings.save('color', raw_color)
 
     def show(self, color=None):
         if color is None:
-            color = self.color
+            color = Settings.get('color')
+
+        color = self._make_color(color)
         for pixel in range(self.LED_COUNT):
             self.strip.setPixelColor(pixel, color)
 
         self.strip.show()
 
     def on(self):
-        self.show(self.color)
+        self.show()
 
     def off(self):
-        self.show(Color(0, 0, 0))
+        self.show('#000000')
+
+    def _make_color(self, raw_color: str) -> Color:
+        raw_color = raw_color[1:]
+        return Color(
+            int(raw_color[:2], 16),
+            int(raw_color[2:4], 16),
+            int(raw_color[4:6], 16)
+        )
 
     @classmethod
     def instance(cls):

@@ -2,9 +2,15 @@
 
 body {
     background-color: #1D3557;
-    margin: 3em;
+    margin: 0;
     font-size: 2em;
     color: #F1FAEE;
+    position: relative;
+}
+
+.main-content {
+    display: block;
+    padding: 3em;
     position: relative;
 }
 
@@ -19,6 +25,15 @@ a {
 
 .hidden {
     display: none;
+}
+
+#refresh-page {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    z-index: 30;
 }
 
 /* Nav */
@@ -43,7 +58,9 @@ a {
 }
 
 .content {
-    position: relative;
+    width: 70%;
+    margin: auto;
+    text-align: center;
 }
 
 .button-container {
@@ -72,11 +89,11 @@ a {
 
 
 /* Settings */
+#settings-content {
+    text-align: left;
+}
+
 .network-container {
-    text-align: center;
-    width: 70%;
-    display: block;
-    margin: auto;
     list-style: none;
 }
 
@@ -97,23 +114,41 @@ a {
 }
 
 .popup {
-    margin-top: 3em;
     position: absolute;
-    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
+    top: 3em;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
     padding: 1em;
     background-color: #2a466e;
+    padding-top: 3em;
+    z-index: 10;
+}
+
+#error {
+    z-index: 30;
+    background-color: rgb(216, 0, 0);
+    color: black;
+    text-align: center;
+    padding: 1em;
 }
 
 .popup-close {
     display: flex;
     margin: 1em;
+    position: absolute;
+    top: 1em;
+    right: 1em;
 }
 
 #wifi-form .form-logo {
     width: 64px;
     height: 64px;
+}
+
+#wifi-form .form-item {
+    display: flex;
+    margin: 1em;
 }
 
 #wifi-form .form-item input {
@@ -142,13 +177,6 @@ a {
     cursor: pointer;
 }
 
-#wifi-close, #reboot-close {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-
-}
-
 #wifi-form svg {
     width: 32px;
     height: 32px;
@@ -156,12 +184,6 @@ a {
 
 
 /* Home */
-#home-content {
-    text-align: center;
-    width: 60%;
-    margin: auto;
-}
-
 .home-item {
     text-align: left;
     margin: 1em;
@@ -191,6 +213,7 @@ a {
 /* Loading */
 #loading {
     padding: 1em 4em;
+    z-index: 20;
 }
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
@@ -204,4 +227,19 @@ a {
 @keyframes spin {
 0% { transform: rotate(0deg); }
 100% { transform: rotate(360deg); }
+}
+
+
+/* Keyboard */
+.key {
+    background-color: rgb(44, 41, 41);
+    color: #8dbedf;
+    font-size: 1.5em;
+    min-width: 50px;
+    height: 70px;
+    border: 1px solid gray;
+}
+
+#disconnect-btn {
+    margin: .3em 0;
 }

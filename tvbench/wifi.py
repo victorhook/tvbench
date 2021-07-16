@@ -55,6 +55,7 @@ class Wifi:
 
     @classmethod
     def get_networks(cls) -> List[Network]:
+        DEBUG = False
         if DEBUG:
             try:
                 with open('cached_network', 'rb') as f:
@@ -63,7 +64,6 @@ class Wifi:
                 pass
 
         nic = cls._get_nic()
-        response = sh('iwlist', nic, 'scan')
 
         lines = sh('nmcli', 'device', 'wifi').split('\n')
         lines = [re.sub('\s+', ' ', line) for line in lines]
@@ -77,16 +77,24 @@ class Wifi:
             else:
                 offset = 0
 
-            networks.append(
-                Network(
-                    name=line[offset+1],
-                    address=line[offset+0],
-                    channel=line[offset+3],
-                    rate=line[offset+4] + ' ' + line[offset+5],
-                    signal=int(line[offset+6]),
-                    active=line[0] == '*'
+            name = line[offset+1]
+            if name == '--':
+                continue
+
+            try:
+
+                networks.append(
+                    Network(
+                        name=name,
+                        address=line[offset+0],
+                        channel=line[offset+3],
+                        rate=line[offset+4] + ' ' + line[offset+5],
+                        signal=int(line[offset+6]),
+                        active=line[0] == '*'
+                    )
                 )
-            )
+            except:
+                print(line)
 
 
         if DEBUG:
@@ -111,6 +119,7 @@ class Wifi:
 
     @classmethod
     def connect(cls, ssid: str, password: str) -> None:
+        print('nmcli', 'device', 'wifi', 'connect', ssid, 'password', password)
         res = sh('nmcli', 'device', 'wifi', 'connect', ssid, 'password', password)
         return 'successfully activated' in res
 

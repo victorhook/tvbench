@@ -2,17 +2,19 @@ from flask import Flask, render_template, jsonify
 app = Flask(__name__)
 
 from wifi import Wifi
+from settings import Settings
 from ledstrip import Ledstrip, Color
 
 
 led = Ledstrip()
 
 @app.route('/')
-def hello_world():
+def index():
     networks = Wifi.get_networks()
     connection = Wifi.get_connected_network(networks)
     return render_template('index.html',
         **{
+            'color': Settings.get('color'),
             'networks': networks,
             'connection': connection
         }
@@ -28,17 +30,33 @@ def on():
 @app.route('/off/')
 def off():
     print('off')
-    led.off()
+    led.on()
     return jsonify({'result': 'OK'})
 
 
 @app.route('/color/<string:color>/')
 def set_color(color):
-    color = Color(
-        int(color[:2], 16),
-        int(color[2:4], 16),
-        int(color[4:6], 16)
-    )
-    led.set_color(color)
+    led.save_color('#' + color)
+    led.show()
+    return jsonify({'result': 'OK'})
 
+
+def resultify(boolean_result):
+    return 'OK' if boolean_result else 'NOT_OK'
+
+
+@app.route('/connect/<string:wifi>/<string:password>/')
+def connect(wifi, password):
+    connected = Wifi.connect(wifi, password)
+    return jsonify({'result': resultify(connected)})
+
+
+@app.route('/disconnect/')
+def disconnect():
+    result = Wifi.disconnect()
+    return jsonify({'result': resultify(result)})
+
+
+@app.route('/reboot/')
+def reboot():
     return jsonify({'result': 'OK'})

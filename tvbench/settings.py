@@ -11,20 +11,21 @@ class Settings:
     color: str = '#ff3300'
 
     @classmethod
-    def load(cls) -> object:
+    def get(cls, key: str = None):
         try:
             with open(_PATH) as f:
-                return cls(**json.load(f))
-        except json.decoder.JSONDecodeError:
-            print('Failed to load settings from disk. Create new default ones.')
-            return Settings()
+                data = json.load(f)
+        except FileNotFoundError:
+            print('No previous settings found.')
+            return {}
 
-    def save(self):
+        if key is not None:
+            return data[key]
+        return data
+
+    @classmethod
+    def save(cls, key, value):
+        settings = cls.get()
+        settings[key] = value
         with open(_PATH, 'w') as f:
-            return json.dump(asdict(self), f, indent=4)
-
-
-if __name__ == '__main__':
-    settings = Settings.load()
-    print(settings)
-    settings.save()
+            json.dump(settings, f, indent=4)

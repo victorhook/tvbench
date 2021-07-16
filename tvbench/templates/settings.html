@@ -1,5 +1,19 @@
 <div class="settings-content">
 
+    <div id="disconnect-form" class="popup hidden">
+        <a id="disconnect-close" href="javascript:void(0);" class="popup-close" onclick="hideDisconnectForm()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+            </svg>
+        </a>
+        <h4>Är du säker att du vill koppla ifrån?</h4>
+        <div class="button-container">
+            <button id="disconnect-btn" class="button" onclick="disconnect()">Ja</button>
+            <button  id="no-disconnect" class="button button-secondary" onclick="hideDisconnectForm()">Nej</button>
+        </div>
+    </div>
+
+
     <div class="status">
         <div class="status-item">
             <label>Nätverksstatus: </label>
@@ -18,9 +32,11 @@
                     <label>{{ value }}</label>
                 </div>
             {% endfor %}
+            <div class="status-item">
+                <button id="disconnect-btn" onclick="showDisconnectForm()" class="button">Koppla ifrån</button>
+            </div>
         {% endif %}
     </div>
-
 
     <ul class="network-container">
         {% for network in networks %}
@@ -46,7 +62,7 @@
         {% endfor %}
     </ul>
 
-    <form id="wifi-form" class="popup hidden">
+    <div id="wifi-form" class="popup hidden">
         <a id="wifi-close" href="javascript:void(0);" class="popup-close">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                 <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
@@ -74,17 +90,21 @@
                 </svg>
             </span>
         </div>
+        <div id="keyboard"></div>
         <div class="button-container">
-            <input type="submit" value="Anslut" class="button">
+            <button id="connect" onclick="connect()" class="button">Anslut</button>
         </div>
-    </form>
 
+    </div>
+
+    <script src="{{url_for('static', filename='keyboard.js')}}"></script>
     <script>
         const wifiForm = document.getElementById('wifi-form');
         const wifiName = document.getElementById('wifi-name');
         const wifiPassword = document.getElementById('wifi-password');
         const eyeOpen = document.getElementById('eye-open');
         const eyeClose = document.getElementById('eye-close');
+        const disconnectForm = document.getElementById('disconnect-form');
 
         let eyeIsOpen = false;
         let visible = false;
@@ -92,9 +112,32 @@
         eyeOpen.addEventListener('click', () => toggleEye());
         eyeClose.addEventListener('click', () => toggleEye());
         document.getElementById('wifi-close').addEventListener('click', () => deactivateForm());
+        document.getElementById('no-disconnect').addEventListener('click', () => hide(disconnectForm))
 
         for (let wifi of document.getElementsByClassName('wifi-link')) {
             wifi.addEventListener('click', () => activateForm(wifi));
+        }
+
+        const keyBoard = new KeyBoard("keyboard", "wifi-password");
+
+
+        function connect() {
+            let password = keyBoard.read();
+            if (!wifiName || !password)
+                return;
+
+            let url = document.location.href + 'connect/' + wifiName.value + '/' + password + '/';
+            startLoader();
+            fetch(url).then(res => res.json())
+                      .then(res => {
+                            stopLoader();
+                            if (res['result'] == 'OK') {
+                                location.reload();
+                            } else {
+                                showError('Kunde inte ansluta till nätverket. Dubbelkolla lösenordet!');
+                                console.log('bad', res)
+                            }
+                      })
         }
 
         function toggleEye(eye) {
@@ -121,6 +164,28 @@
         function deactivateForm(wifi) {
             visible = false;
             hide(wifiForm);
+        }
+
+        function showDisconnectForm() {
+            show(disconnectForm);
+        }
+
+        function hideDisconnectForm() {
+            hide(disconnectForm);
+        }
+
+        function disconnect() {
+            startLoader();
+            fetch('/disconnect/')
+                .then(res => res.json())
+                .then(res => {
+                    stopLoader();
+                    if (res.result == 'OK') {
+                        location.reload();
+                    } else {
+                        showError('Kunde inte koppla från nätverket.');
+                    }
+                });
         }
 
 
