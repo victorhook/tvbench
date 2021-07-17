@@ -188,7 +188,7 @@ a {
 .home-item {
     text-align: left;
     margin: 1em;
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
 .home-item label {
@@ -202,8 +202,8 @@ a {
 
 .bulb {
     position: absolute;
-    width: 64px;
-    height: 64px;
+    width: 90px;
+    height: 90px;
 }
 
 #colorpicker {

@@ -65,17 +65,19 @@ class Ledstrip:
         self.strip.show()
 
     def on(self):
+        Settings.save('on', True)
         self.show()
 
     def off(self):
+        Settings.save('on', False)
         self.show('#000000')
 
     def _make_color(self, raw_color: str) -> Color:
         raw_color = raw_color[1:]
         return Color(
             int(raw_color[:2], 16),
-            int(raw_color[2:4], 16),
-            int(raw_color[4:6], 16)
+            int(raw_color[4:6], 16),
+            int(raw_color[2:4], 16)
         )
 
     @classmethod

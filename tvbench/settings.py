@@ -1,5 +1,6 @@
 from dataclasses import dataclass, asdict
 from pathlib import Path
+import os
 import json
 
 
@@ -9,6 +10,8 @@ _PATH = Path(__file__).parent.joinpath('settings.json')
 @dataclass
 class Settings:
     color: str = '#ff3300'
+    RPI = 'RPI' in os.environ
+    DEBUG = 'DEBUG' in os.environ
 
     @classmethod
     def get(cls, key: str = None):

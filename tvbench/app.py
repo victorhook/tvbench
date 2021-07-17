@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+import os
 app = Flask(__name__)
 
 from wifi import Wifi
@@ -7,6 +8,10 @@ from ledstrip import Ledstrip, Color
 
 
 led = Ledstrip()
+if Settings.get('on'):
+    led.on()
+else:
+    led.off()
 
 
 @app.route('/')
@@ -32,7 +37,7 @@ def on():
 @app.route('/off/')
 def off():
     print('off')
-    led.on()
+    led.off()
     return jsonify({'result': 'OK'})
 
 
@@ -61,4 +66,7 @@ def disconnect():
 
 @app.route('/reboot/')
 def reboot():
+    if Settings.RPI:
+        os.system('reboot')
+
     return jsonify({'result': 'OK'})

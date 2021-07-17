@@ -5,14 +5,12 @@ import pickle
 import re
 import os
 
-
-DEBUG = 'DEBUG' in os.environ
+from settings import Settings
 
 
 @dataclass
 class Network:
     name: str
-    address: str
     channel: int
     rate: str
     signal: int
@@ -56,7 +54,7 @@ class Wifi:
 
     @classmethod
     def get_networks(cls) -> List[Network]:
-        if DEBUG:
+        if Settings.DEBUG:
             try:
                 with open('cached_network', 'rb') as f:
                     return pickle.load(f)
@@ -72,24 +70,35 @@ class Wifi:
         networks = []
         for line in lines[1:]:
             line = line.split()
-            if line[0] == '*':
-                offset = 1
-            else:
-                offset = 0
 
-            name = line[offset+1]
+            active=line[0] == '*'
+            offset = 1 if active else 0
+
+            if Settings.RPI:
+                name=line[offset+0]
+                channel=line[offset+2]
+                rate=line[offset+3] + ' ' + line[offset+4]
+                signal=int(line[offset+5])
+            else:
+                name=line[offset+1]
+                channel=line[offset+3]
+                rate=line[offset+4] + ' ' + line[offset+5]
+                try:
+                    signal=int(line[offset+6])
+                except:
+                    signal=int(line[offset+7])
+
             if name == '--':
                 continue
 
             try:
                 networks.append(
                     Network(
-                        name=name,
-                        address=line[offset+0],
-                        channel=line[offset+3],
-                        rate=line[offset+4] + ' ' + line[offset+5],
-                        signal=int(line[offset+6]),
-                        active=line[0] == '*'
+                        name,
+                        channel,
+                        rate,
+                        signal,
+                        active
                     )
                 )
             except Exception as e:
@@ -97,7 +106,7 @@ class Wifi:
                 print(e)
 
 
-        if DEBUG:
+        if Settings.DEBUG:
             with open('cached_network', 'wb') as f:
                 pickle.dump(networks, f)
 
@@ -142,5 +151,13 @@ class Wifi:
         return ip
 
 
+def sanity_test():
+    print('Networks: ')
+    print('\n'.join(str(n) for n in Wifi.get_networks()))
+    print('Ip: %s' % Wifi.get_ip())
+    print('State: %s' % Wifi.get_state())
+    print('Nic: %s' % Wifi._get_nic())
+
+
 if __name__ == '__main__':
-    pass
+    sanity_test()
