@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
 from wifi import Wifi
@@ -8,12 +8,14 @@ from ledstrip import Ledstrip, Color
 
 led = Ledstrip()
 
+
 @app.route('/')
 def index():
     networks = Wifi.get_networks()
     connection = Wifi.get_connected_network(networks)
     return render_template('index.html',
         **{
+            'ip': Wifi.get_ip(),
             'color': Settings.get('color'),
             'networks': networks,
             'connection': connection
