@@ -82,7 +82,6 @@ class Wifi:
                 continue
 
             try:
-
                 networks.append(
                     Network(
                         name=name,
@@ -93,8 +92,9 @@ class Wifi:
                         active=line[0] == '*'
                     )
                 )
-            except:
+            except Exception as e:
                 print(line)
+                print(e)
 
 
         if DEBUG:
@@ -119,7 +119,6 @@ class Wifi:
 
     @classmethod
     def connect(cls, ssid: str, password: str) -> None:
-        print('nmcli', 'device', 'wifi', 'connect', ssid, 'password', password)
         res = sh('nmcli', 'device', 'wifi', 'connect', ssid, 'password', password)
         return 'successfully activated' in res
 
