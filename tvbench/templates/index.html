@@ -35,7 +35,8 @@
     <nav class="navbar">
         <div>
             <h1>Jossans TV-bänk</h1>
-            <h4 id="time"></h4>
+            <span id="time"></span> <br/>
+            <span>Lyssnar på: {{ ip }}</span>
         </div>
 
         <div>
@@ -82,7 +83,7 @@
         </div>
     </div>
 
-    
+
     <div class="content">
 
         <div id="home-content">
@@ -133,11 +134,14 @@
         }
 
         function setTime() {
-            let date = new Date().toISOString().split('T');
-            let time = date[1].split('Z')[0].substr(0, 5);
-            let currTime =  date[0] + ' ' +  time;
-            console.log(currTime)
-            timeLabel.innerHTML = currTime;
+            let date = new Date();
+            let dateString = date.getFullYear() + '-';
+            dateString += date.getMonth().toString().padStart(2, '0') + '-';
+            dateString += date.getDate().toString().padStart(2, '0') + ' ';
+            dateString += date.getHours().toString().padStart(2, '0') + ':';
+            dateString += date.getMinutes().toString().padStart(2, '0');
+            dateString += ' ';
+            timeLabel.innerHTML = dateString;
         }
 
         for (let nav of navs) {

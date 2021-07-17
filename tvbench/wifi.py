@@ -55,7 +55,7 @@ class Wifi:
 
     @classmethod
     def get_networks(cls) -> List[Network]:
-        DEBUG = False
+        DEBUG = True
         if DEBUG:
             try:
                 with open('cached_network', 'rb') as f:
