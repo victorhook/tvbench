@@ -15,7 +15,7 @@ def index():
     connection = Wifi.get_connected_network(networks)
     return render_template('index.html',
         **{
-            'ip': request.host,
+            'ip': Wifi.get_ip(),
             'color': Settings.get('color'),
             'networks': networks,
             'connection': connection

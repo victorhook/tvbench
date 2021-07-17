@@ -3,9 +3,10 @@ import subprocess
 from typing import List
 import pickle
 import re
+import os
 
 
-DEBUG = True
+DEBUG = 'DEBUG' in os.environ
 
 
 @dataclass
@@ -55,7 +56,6 @@ class Wifi:
 
     @classmethod
     def get_networks(cls) -> List[Network]:
-        DEBUG = True
         if DEBUG:
             try:
                 with open('cached_network', 'rb') as f:
@@ -133,6 +133,14 @@ class Wifi:
         for network in networks:
             if network.active:
                 return network
+
+    @classmethod
+    def get_ip(cls) -> str:
+        try:
+            ip = re.search('inet4 (.*)/', sh('nmcli')).group(1)
+        except:
+            ip = '127.0.0.1'
+        return ip
 
 
 if __name__ == '__main__':
