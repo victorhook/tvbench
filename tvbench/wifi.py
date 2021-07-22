@@ -75,10 +75,11 @@ class Wifi:
             offset = 1 if active else 0
 
             if Settings.RPI:
-                name=line[offset+0]
-                channel=line[offset+2]
-                rate=line[offset+3] + ' ' + line[offset+4]
-                signal=int(line[offset+5])
+                end = len(line) - 1
+                signal=int(line[end - 2])
+                rate=line[end - 4] + ' ' + line[end - 3]
+                channel=line[end - 5]
+                name=''.join(line[offset:end-6])
             else:
                 name=line[offset+1]
                 channel=line[offset+3]
@@ -122,7 +123,7 @@ class Wifi:
         lines = sh('nmcli', 'device').splitlines()
         lines = [re.sub('\s+', ' ', line) for line in lines[1:]]
         for line in lines:
-            device, type_, state, con = line.split()
+            device, type_, state, con, *_ = line.split()
             if device == nic:
                 return state
 
@@ -147,7 +148,7 @@ class Wifi:
         try:
             ip = re.search('inet4 (.*)/', sh('nmcli')).group(1)
         except:
-            ip = '127.0.0.1'
+            ip = None
         return ip
 
 

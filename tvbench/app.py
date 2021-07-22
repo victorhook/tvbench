@@ -13,6 +13,7 @@ if Settings.get('on'):
 else:
     led.off()
 
+LISTEN_PORT = os.environ.get('PORT', '?')
 
 @app.route('/')
 def index():
@@ -21,6 +22,7 @@ def index():
     return render_template('index.html',
         **{
             'ip': Wifi.get_ip(),
+            'port': LISTEN_PORT,
             'color': Settings.get('color'),
             'networks': networks,
             'connection': connection
