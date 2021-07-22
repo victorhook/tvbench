@@ -29,7 +29,7 @@
     const bulbOn = document.getElementById('bulb-on');
     const bulbOff = document.getElementById('bulb-off');
     const colorWheel = document.getElementById('colorpicker');
-    let lightIsOn = false;
+    let lightIsOn = {{ 'true' if light_on else 'false' }};
 
     document.getElementById('color-button').addEventListener('click', () => setColor());
 

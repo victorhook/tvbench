@@ -24,6 +24,7 @@ def index():
             'ip': Wifi.get_ip(),
             'port': LISTEN_PORT,
             'color': Settings.get('color'),
+            'light_on': Settings.get('on'),
             'networks': networks,
             'connection': connection
         }
