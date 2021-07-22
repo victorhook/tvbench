@@ -1,0 +1,11 @@
+[Unit]
+Description=TvBench
+After=network.target
+
+[Service]
+WorkingDirectory=/home/victor/tvbench/
+ExecStart=/bin/bash /home/victor/tvbench/start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

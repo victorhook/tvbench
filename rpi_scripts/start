@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Update repo
+git fetch origin
+
+# Reset locally to match remote
+git reset --hard origin/master
+
+./app >> flasklog
