@@ -14,7 +14,7 @@ class KeyBoard {
             '!"#¤%&/()=?',
             'QWERTYUIOPÅ^',
             'ASDFGHJKLÖÄ',
-            '>ZXCVBNM;:_'
+            '>ZXCVBNM;:_*'
         ];
         this.mapAltGrKeys = [
             '¡@£$€¥{[]}\'',
